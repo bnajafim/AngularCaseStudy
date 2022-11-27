@@ -1,0 +1,88 @@
+<mat-card-header class="app-accent" layout="row">
+    <mat-card-title>
+    <span class="mat-headline"> </span> <img src="../../../assets/vendor-logo.png" width="100" height="100"/>  
+    </mat-card-title>
+</mat-card-header>
+
+<form [formGroup]="vendorForm">
+    <div layout="row" >
+        <mat-form-field flex>
+            <input matInput placeholder="Name" type="text" formControlName="name" >
+            <mat-error *ngIf="name.errors && (name.dirty || name.touched)" align="end" > Vendor Name is required </mat-error>
+        </mat-form-field>
+    </div>
+    <div layout="row" >
+        <mat-form-field flex>
+            <input matInput placeholder="Address1" type="text" formControlName="address1">
+            <mat-error *ngIf="address1.errors && (address1.dirty || address1.touched)" align="end" > Address is required </mat-error>
+        </mat-form-field>
+    </div>
+    <div layout="row" >
+        <mat-form-field flex>
+            <input matInput placeholder="City" type="text" formControlName="city">
+            <mat-error *ngIf="city.errors && (city.dirty || city.touched)" align="end" > City is required </mat-error>
+        </mat-form-field>
+    </div>
+    <div layout="row" >
+        <mat-form-field flex>
+        <mat-error *ngIf="province.errors && (province.dirty || province.touched)" align="end" > Province is required </mat-error> 
+         <mat-select matInput placeholder="Province" type="text" formControlName="province" flex>                   
+            <mat-option value="On">Ontario</mat-option>
+            <mat-option value="Qu">Quebec</mat-option>
+            <mat-option value="Ab">Alberta</mat-option>            
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div layout="row" >
+        <mat-form-field flex>
+            <input matInput placeholder="Postalcode" type="text" formControlName="postalcode">
+            <mat-error *ngIf="postalcode.errors && (postalcode.dirty || postalcode.touched)" align="end" > 
+                <p *ngIf="postalcode.hasError('required')">Postalcode is required.</p>
+            <p *ngIf="!postalcode.hasError('required') && postalcode.hasError('invalidPostalcode')">format must be-
+            X#X-#X#</p>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div layout="row" >
+        <mat-form-field flex>
+            <input matInput placeholder="Phone" type="text" formControlName="phone">
+            <mat-error *ngIf="phone.errors && (phone.dirty || phone.touched)" align="end" >
+            <p *ngIf="phone.hasError('required')">Phone# is required.</p>
+            <p *ngIf="!phone.hasError('required') && phone.hasError('invalidPhone')">format must be-
+            (###)###-####</p>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div layout="row" >
+        <mat-form-field flex> 
+            <mat-error *ngIf="type.errors && (type.dirty ||type.touched)" align="end" > Type is required </mat-error>             
+            <mat-select matInput placeholder="Type" type="text" formControlName="type" flex>
+                <mat-option value="trusted">Trusted</mat-option>
+                <mat-option value="unTrusted">Un-Trusted</mat-option>                                  
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div layout="row" >
+        <mat-form-field flex>
+            <input matInput placeholder="Email" type="email" formControlName="email">
+            <mat-error *ngIf="email.errors && (email.dirty || email.touched)" align="end" > 
+                <p *ngIf="email.hasError('required')">Email is required.</p>
+                <p *ngIf="!email.hasError('required') && email.hasError('email')">format must be-
+                xx@xx.xx</p> </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="mat-pad-sm">
+        <span>
+            <button mat-raised-button type="button" (click)="updateSelectedVendor()" [disabled]="!vendorForm.valid">
+            Save
+            </button>
+            </span>
+        <span>
+            <button *ngIf="selectedVendor.id" mat-raised-button type="button"
+            (click)="deleted.emit(selectedVendor)">Delete</button>
+            </span>
+        <span>
+            <button mat-raised-button type="button" (click)="cancelled.emit(selectedVendor)">Cancel</button>
+        </span>
+    </div>
+    </form>
